@@ -1,0 +1,31 @@
+<div class="container">
+    <h3 mat-dialog-title *ngIf="flag == 1">Dodavanje porudžbine</h3>
+    <h3 mat-dialog-title *ngIf="flag == 2">Modifikacija porudžbine: {{data.id}}</h3>
+    <h3 mat-dialog-title *ngIf="flag == 3">Brisanje porudžbine: {{data.id}}</h3>
+  
+    <form class="mat-dialog-content"  #formControl="ngForm">
+  
+      <div class="form">
+        <mat-form-field>
+          <input matInput placeholder="Oznaka" [(ngModel)]="data.oznaka" name="oznaka" [disabled]="flag == 3">
+        </mat-form-field>
+      </div>
+  
+      <div class="form">
+        <mat-form-field>
+          <mat-select [(ngModel)]="data.smer" placeholder="Smer" name="smer" [compareWith]="compareTo" [disabled]="flag == 3">
+            <mat-option *ngFor="let smer of smer" [value]="smer">
+              {{ smer.naziv }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <div mat-dialog-actions>
+        <button mat-button *ngIf="flag == 1"  [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="add()">Sačuvaj</button>
+        <button mat-button *ngIf="flag == 2"  [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="update()">Sačuvaj</button>
+        <button mat-button *ngIf="flag == 3"  [mat-dialog-close]="1" (click)="delete()">Obriši</button>
+        <button mat-button (click)="cancel()" tabindex="-1">Poništi</button>
+      </div>
+    </form>
+   </div>

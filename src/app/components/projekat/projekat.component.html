@@ -1,0 +1,68 @@
+<mat-toolbar color="primary">
+    <span class="title-center">Projekat</span>
+  </mat-toolbar>
+  
+  <div class="container mat-elevation-z8">
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Filter"
+        (keyup)="applyFilter($event)"
+        
+      />
+    </mat-form-field>
+    <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.id }}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="naziv">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Naziv</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.naziv }}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="opis">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Opis</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.opis }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="oznaka">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Oznaka</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.oznaka }}</mat-cell>
+      </ng-container>
+  
+      <!-- actions -->
+      <ng-container matColumnDef="actions">
+        
+        <mat-header-cell *matHeaderCellDef>
+          <button mat-icon-button color="primary" (click)="openDialog(1)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-header-cell>
+  
+        <mat-cell *matCellDef="let row; let i = index">
+          <button mat-icon-button color="primary" (click)="openDialog(2,row.id,row.naziv,row.opis,row.oznaka)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" (click)="openDialog(3,row.id,row.naziv,row.opis,row.oznaka)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row
+        style="cursor: default"
+        *matRowDef="let row; columns: displayedColumns"
+      ></mat-row>
+    </mat-table>
+    <mat-paginator
+      [length]="100"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+  </div>

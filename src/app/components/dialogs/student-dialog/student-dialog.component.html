@@ -1,0 +1,43 @@
+<div class="container">
+    <h3 mat-dialog-title *ngIf="flag == 1">Dodavanje novog studenta:</h3>
+    <h3 mat-dialog-title *ngIf="flag == 2">Modifikacija izabranog studenta: {{data.id}}</h3>
+    <h3 mat-dialog-title *ngIf="flag == 3">Brisanje izabranog studenta: {{data.id}}</h3>
+  
+    <form class="mat-dialog-content"  #formControl="ngForm">
+  
+      <div class="form">
+        <mat-form-field>
+          <mat-select [(ngModel)]="data.projekat" placeholder="Projekat" name="projekat" [compareWith]="compareTo" [disabled]="flag == 3">
+            <mat-option *ngFor="let projekat of projekti" [value]="projekat">
+              {{ projekat.naziv }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <div class="form">
+        <mat-form-field>
+          <input matInput placeholder="Broj Indeksa" [(ngModel)]="data.brojIndeksa" name="brojIndeksa" [disabled]="flag == 3">
+        </mat-form-field>
+      </div>
+  
+      <div class="form">
+        <mat-form-field>
+          <input matInput placeholder="Ime" [(ngModel)]="data.ime" name="ime" [disabled]="flag == 3">
+        </mat-form-field>
+      </div>
+  
+      <div class="form">
+        <mat-form-field>
+          <input matInput placeholder="Prezime" [(ngModel)]="data.prezime" name="prezime" [disabled]="flag == 3">
+        </mat-form-field>
+      </div>
+  
+      <div mat-dialog-actions>
+        <button mat-button *ngIf="flag == 1" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="add()">Sačuvaj</button>
+        <button mat-button *ngIf="flag == 2"  [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="update()">Sačuvaj</button>
+        <button mat-button *ngIf="flag == 3"  [mat-dialog-close]="1" (click)="delete()">Obriši</button>
+        <button mat-button (click)="cancel()" tabindex="-1">Poništi</button>
+      </div>
+    </form>
+  </div>
